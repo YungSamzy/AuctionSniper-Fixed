@@ -3,9 +3,9 @@ from discord.ext import commands
 import time
 import os
 import collections
-from TOKEN import TOKEN
-
-bot = commands.Bot(command_prefix = 'fa.')
+import sys
+intents=discord.Intents.all()
+bot = commands.Bot(command_prefix = 'fa.', intents=intents)
 
 def sort_margins(margins):
     try:
@@ -29,15 +29,15 @@ def get_margin(auctions):
     if new_auction_list != {}: return new_auction_list
 
 async def check_logs():
-    channel = bot.get_channel(949012493047578624) #unused xd
-    lm_channel = bot.get_channel(949012556100554752)
-    f2channel = bot.get_channel(950467930032848977)
-    f2_2channel = bot.get_channel(955488324431253584)
-    f3channel = bot.get_channel(951851755015114772)
-    superchannel = bot.get_channel(953404693156089937)
+    channel = bot.get_channel(1037559187271598122) #unused xd
+    lm_channel = bot.get_channel(1037559673215275081)
+    f2channel = bot.get_channel(1037559775384309760)
+    f2_2channel = bot.get_channel(1037559857051602944)
+    f3channel = bot.get_channel(1037559910780649472)
+    superchannel = bot.get_channel(1037559984139018250)
     #super2channel = bot.get_channel()#make channel soon
-    petchannel = bot.get_channel(959984499905675304)
-    runechannel = bot.get_channel(1019055075991240746)
+    petchannel = bot.get_channel(1037560042901213294)
+    runechannel = bot.get_channel(1037560105350213684)
     log = './fliplogs/logs.txt' #unused xd
     lmlog = './fliplogs/logs_f1.txt'
     f2log = './fliplogs/logs_f2.txt'
@@ -196,9 +196,11 @@ async def check_logs():
 
 @bot.command(name = 'run')
 async def start_check(ctx):
-    if ctx.author.id == 488730568209465344:
+    if ctx.author.id == 877392093155311686:
         while True:
-            await check_logs()
-            time.sleep(1)
+            try:
+                await check_logs()
+            except:
+                os.execv(sys.executable, ['python'] + sys.argv)
 
 bot.run(TOKEN)
