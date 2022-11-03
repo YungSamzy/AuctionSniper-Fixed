@@ -119,8 +119,12 @@ def fetch(session, page):
                         # removes level if it's a pet, also
                         name = str(auction['item_name'])
                         tier = str(auction['tier'])
+
+                        if "Rune I" in auction["item_lore"]:
+                            return
+
                         index = re.sub("\[[^\]]*\]", "", name + tier)
-                        print(auction['item_lore'])
+                        # print(auction['item_lore'])
                         # if the current item already has a price in the prices map, the price is updated
                         filtindex = index
                         for reforge in REFORGES:
@@ -166,7 +170,7 @@ def fetch(session, page):
                                 if auction['category'] == 'weapon' or auction['category'] == 'armor':
                               #      print('here')
                                     desc = str(auction['item_lore'])
-                                    print(desc)
+                                    # print(desc)
                                     global ult_ench
                                     global auprice
                                     global auformat
@@ -369,7 +373,11 @@ def main():
                 fAp5.write(toprint)
 
 print("Looking for auctions...")
-main()
+try:
+    main()
+except:
+    print("Encoding Probably Broke, restarting!")
+    os.execv(sys.executable, ['python'] + sys.argv)
 
 def dostuff():
     global now, toppage
